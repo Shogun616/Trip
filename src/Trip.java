@@ -1,5 +1,3 @@
-import java.util.Comparator;
-
 public class Trip implements Comparable<Trip>{
 
     String destination;
@@ -25,7 +23,7 @@ public class Trip implements Comparable<Trip>{
     }
 
     @Override
-    public int compareTo(Trip t){
-        return this.price.compareTo(t.price);
+    public int compareTo(Trip o){
+        return this.price.compareTo(o.price);
     }
 }

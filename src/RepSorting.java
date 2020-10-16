@@ -1,5 +1,8 @@
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 public class RepSorting {
 
@@ -17,61 +20,15 @@ public class RepSorting {
         trips.add(t3);
         trips.add(t4);
 
-        System.out.println("\nSorted by price ascending");
+        Predicate<Trip> cheaperThen5000 = trip -> trip.price < 5000;
+        Predicate<Trip> destinationMadrid = trip -> trip.destination.equalsIgnoreCase("Madrid");
+        Comparator<Trip> sortBypriceDecending = ((o1, o2) -> o2.price.compareTo(o1.price));
+        Consumer<Trip> printElement = System.out::println;
 
-        trips.sort(null);
-
-        for (Trip p : trips){
-            System.out.println(p);
-        }
-
-        System.out.println("\nSorted by price descending");
-        Collections.reverse(trips);
-
-        for (Trip p : trips){
-            System.out.println(p);
-        }
-
-        System.out.println("\nSorted by destination ascending");
-        trips.sort(new SortByDestinationAscending());
-
-        for (Trip p : trips){
-            System.out.println(p);
-        }
-
-        System.out.println("\nSorted by destination descending");
-        Collections.reverse(trips);
-
-        for (Trip p : trips){
-            System.out.println(p);
-        }
-
-        System.out.println("\nSorted by fromCity ascending");
-        trips.sort(new SortByFromCityAscending());
-
-        for (Trip p : trips){
-            System.out.println(p);
-        }
-
-        System.out.println("\nSorted by fromCity descending");
-        Collections.reverse(trips);
-
-        for (Trip p : trips){
-            System.out.println(p);
-        }
-
-        System.out.println("\nSorted by type ascending");
-        trips.sort(new SortByTypeAscending());
-
-        for (Trip p : trips){
-            System.out.println(p);
-        }
-
-        System.out.println("\nSorted by type descending");
-        Collections.reverse(trips);
-
-        for (Trip p : trips){
-            System.out.println(p);
-        }
+        trips.stream()
+                .sorted(sortBypriceDecending)
+                .filter(cheaperThen5000)
+                .filter(destinationMadrid)
+                .forEach(printElement);
     }
 }
